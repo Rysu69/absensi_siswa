@@ -27,13 +27,13 @@ class MyDrawer extends StatelessWidget {
           ),
 
           MyListTile(
-            icon: Icons.home,
+            icon: Icons.person,
             text: 'P R O F I L E',
             ontap: onProfileTap,
           ),
 
           MyListTile(
-            icon: Icons.home,
+            icon: Icons.logout,
             text: 'L O G O U T',
             ontap: onSignOut,
           ),
