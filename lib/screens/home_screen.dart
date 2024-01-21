@@ -1,3 +1,4 @@
+import 'package:absensi_siswa/screens/profile_page.dart';
 import 'package:absensi_siswa/screens/signin_screen.dart';
 import 'package:absensi_siswa/util/drawer.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,29 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  void goToProfilePage() {
+    Navigator.pop(context);
+
+    Navigator.push(
+      context, 
+      MaterialPageRoute(
+        builder: (context) => ProfilePage(),
+        ),
+      );
+  }
+
+  void signOut() {
+    Navigator.pop(context);
+
+    Navigator.push(
+      context, 
+      MaterialPageRoute(
+        builder: (context) => SignInScreen(),
+        ),
+      );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +53,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      drawer: MyDrawer(),
+      drawer: MyDrawer(
+        onProfileTap: goToProfilePage,
+        onSignOut: signOut,
+      ),
+    
     );
   }
 }
