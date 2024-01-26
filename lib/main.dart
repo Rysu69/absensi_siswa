@@ -2,8 +2,13 @@ import 'package:absensi_siswa/screens/signin_screen.dart';
 import 'package:absensi_siswa/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+  options: DefaultFirebaseOptions.currentPlatform,
+);
   runApp(
     ChangeNotifierProvider(
       create: (context) => ThemeProvider(),
