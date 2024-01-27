@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _startLocationService();
     getId().then((value) {
       _getCredentials();
-      _getProfilePic();
+      // _getProfilePic();
     });
   }
 
@@ -53,12 +53,12 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _getProfilePic() async {
-    DocumentSnapshot doc = await FirebaseFirestore.instance.collection("Employee").doc(User.id).get();
-    setState(() {
-      User.profilePicLink = doc['profilePic'];
-    });
-  }
+  // void _getProfilePic() async {
+  //   DocumentSnapshot doc = await FirebaseFirestore.instance.collection("Employee").doc(User.id).get();
+  //   setState(() {
+  //     User.profilePicLink = doc['profilePic'];
+  //   });
+  // }
 
   void _startLocationService() async {
     LocationService().initialize();
