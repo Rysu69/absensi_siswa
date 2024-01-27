@@ -15,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
    late DateTime today;
+    Map<DateTime, List<dynamic>> events = {};
 
   @override
   void initState() {
@@ -49,7 +50,72 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       today = day;
     });
+
+     _showEventDescription(day, events[day] ?? []);
   }
+
+   void _addEventToCalendar() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Add Event'),
+        content: TextField(
+          onChanged: (event) {
+            setState(() {
+              events[today] = [event];
+            });
+          },
+          decoration: InputDecoration(labelText: 'Event Description'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('Save'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showEventDescription(DateTime date, List<dynamic> eventsList) {
+    if (eventsList.isNotEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text('Events on ${date.toString().split(" ")[0]}'),
+          content: Container(
+            height: 200,
+            width: 300,
+            child: ListView.builder(
+              itemCount: eventsList.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text('- ${eventsList[index]}'),
+                );
+              },
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
 
 
   @override
@@ -97,13 +163,18 @@ class _HomeScreenState extends State<HomeScreen> {
               focusedDay: today,
               firstDay: DateTime.utc(2010, 10, 16),
               lastDay: DateTime.utc(2030, 3, 14),
-              onDaySelected: (day, focusedDay) {
-                _onDaySelected(day, focusedDay);
-              },
+              onDaySelected:
+                _onDaySelected,
+                eventLoader: (day) => events[day] ?? [],
             ),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: _addEventToCalendar,
+            child: Text('Add Event'),
           ),
         ],
       ),
     );
   }
-}
+  }
